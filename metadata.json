@@ -1,0 +1,30 @@
+{
+  "name": "praekeltfoundation-consular",
+  "version": "0.1.0",
+  "author": "Jamie Hewland",
+  "summary": "Basic module to manage Consular",
+  "license": "BSD",
+  "source": "https://github.com/praekeltfoundation/puppet-consular",
+  "project_page": "https://github.com/praekeltfoundation/puppet-consular",
+  "issues_url": "https://github.com/praekeltfoundation/puppet-consular/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/apt"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">=3.4.0 < 4.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ]
+}

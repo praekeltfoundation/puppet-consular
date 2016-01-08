@@ -13,6 +13,7 @@ class consular (
   $ensure        = 'installed',
   $consular_args = [],
 ) {
+  include apt
   # NOTE: This is a temporary PPA that is managed manually by a single
   # individual in his personal capacity. It needs to be replaced with a better
   # one that gets automated package updates and such.

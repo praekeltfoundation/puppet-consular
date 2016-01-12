@@ -1,9 +1,9 @@
 {
   "name": "praekeltfoundation-consular",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Jamie Hewland",
   "summary": "Basic module to manage Consular",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "source": "https://github.com/praekeltfoundation/puppet-consular",
   "project_page": "https://github.com/praekeltfoundation/puppet-consular",
   "issues_url": "https://github.com/praekeltfoundation/puppet-consular/issues",

@@ -7,6 +7,12 @@
 # [*ensure*]
 #   The ensure value for the package.
 #
+# [*repo_manage*]
+#   Whether or not to manage the repository for Consular.
+#
+# [*repo_source*]
+#   The repo source to use. Current valid values: 'ppa-jerith'.
+#
 # [*host*]
 #   The address for Consular to listen on for connections from Marathon.
 #
@@ -34,6 +40,8 @@
 #   e.g. { 'timeout' => 10 }
 class consular (
   $ensure          = 'installed',
+  $repo_manage     = true,
+  $repo_source     = 'ppa-jerith',
   $host            = $::ipaddress_lo,
   $port            = 7000,
   $consul          = "http://${::ipaddress_lo}:8500",
@@ -43,6 +51,7 @@ class consular (
   $purge           = false,
   $extra_opts      = {},
 ) {
+  validate_bool($repo_manage)
   validate_ip_address($host)
   validate_integer($port)
   validate_integer($sync_interval)
@@ -64,11 +73,10 @@ class consular (
   }
   $final_opts = merge($base_opts, $extra_opts)
 
-  include apt
-  # NOTE: This is a temporary PPA that is managed manually by a single
-  # individual in his personal capacity. It needs to be replaced with a better
-  # one that gets automated package updates and such.
-  apt::ppa { 'ppa:jerith/consular': ensure => 'present' }
+  class { 'consular::repo':
+    manage => $repo_manage,
+    source => $repo_source,
+  }
   ->
   file { '/etc/init/consular.conf':
     content => template('consular/init.conf.erb'),
@@ -76,7 +84,6 @@ class consular (
   ~>
   package { 'python-consular':
     ensure  => $ensure,
-    require => Class['apt::update'],
   }
   ~>
   service { 'consular':

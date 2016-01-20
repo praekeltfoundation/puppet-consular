@@ -78,12 +78,12 @@ class consular (
     source => $repo_source,
   }
   ->
-  file { '/etc/init/consular.conf':
-    content => template('consular/init.conf.erb'),
-  }
-  ~>
   package { 'python-consular':
     ensure  => $package_ensure,
+  }
+  ->
+  file { '/etc/init/consular.conf':
+    content => template('consular/init.conf.erb'),
   }
   ~>
   service { 'consular':

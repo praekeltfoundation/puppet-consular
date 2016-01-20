@@ -4,8 +4,8 @@
 #
 # === Parameters
 #
-# [*ensure*]
-#   The ensure value for the package.
+# [*package_ensure*]
+#   The ensure value for the Consular package.
 #
 # [*repo_manage*]
 #   Whether or not to manage the repository for Consular.
@@ -39,7 +39,7 @@
 #   override any of the above options.
 #   e.g. { 'timeout' => 10 }
 class consular (
-  $ensure          = 'installed',
+  $package_ensure  = 'installed',
   $repo_manage     = true,
   $repo_source     = 'ppa-jerith',
   $host            = $::ipaddress_lo,
@@ -83,7 +83,7 @@ class consular (
   }
   ~>
   package { 'python-consular':
-    ensure  => $ensure,
+    ensure  => $package_ensure,
   }
   ~>
   service { 'consular':

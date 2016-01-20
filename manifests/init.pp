@@ -28,7 +28,7 @@
 # [*purge*]
 #   Whether or not to purge old Consular-registered services during syncs.
 #
-# [*opts*]
+# [*extra_opts*]
 #   A hash of additional options to pass to Consular. NOTE: these options can
 #   override any of the above options.
 #   e.g. { 'timeout' => 10 }
@@ -41,13 +41,13 @@ class consular (
   $registration_id = $::hostname,
   $sync_interval   = 0,
   $purge           = false,
-  $opts            = {},
+  $extra_opts      = {},
 ) {
   validate_ip_address($host)
   validate_integer($port)
   validate_integer($sync_interval)
   validate_bool($purge)
-  validate_hash($opts)
+  validate_hash($extra_opts)
 
   $purge_flag = $purge ? {
     true  => 'purge',
@@ -62,7 +62,7 @@ class consular (
     'sync-interval'   => $sync_interval,
     "${purge_flag}"   => '',
   }
-  $final_opts = merge($base_opts, $opts)
+  $final_opts = merge($base_opts, $extra_opts)
 
   include apt
   # NOTE: This is a temporary PPA that is managed manually by a single

@@ -8,14 +8,13 @@ This is a very simple module and does not include a lot of features. It is only 
 ### Usage
 ```puppet
 class { 'consular':
-  ensure        => 'latest',
-  consular_args => [
-    "--host=127.0.0.1",
-    "--sync-interval=300",
-    '--purge', # TODO: Make configurable
-    "--registration-id=$::hostname",
-    "--consul=http://127.0.0.1:8500",
-    "--marathon=http://127.0.0.1:8080",
-  ],
+  package_ensure => 'latest',
+  host           => $::ipaddress_eth0,
+  port           => 7070,
+  consul         => 'http://127.0.0.1:8500',
+  marathon       => 'http://127.0.0.1:8080',
+  sync_interval  => 300,
+  purge          => true,
 }
 ```
+For a full list of options see the [manifest source](manifests/init.pp).

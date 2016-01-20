@@ -4,4 +4,4 @@ start on stopped rc RUNLEVEL=[2345]
 respawn
 
 exec /usr/bin/consular<%
-  @consular_args.each do |arg| %> <%= arg %><% end %>
+  @final_opts.each do |k, v| %> <%= "--#{k} #{v}" %><% end %>

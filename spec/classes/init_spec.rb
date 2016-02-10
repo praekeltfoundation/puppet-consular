@@ -62,7 +62,7 @@ describe 'consular' do
       describe 'when repo_source is a custom value' do
         let(:params) { { :repo_source => 'hello' } }
         it do
-          is_expected.to raise_error(/not supported/)
+          is_expected.to raise_error(/APT repository 'hello' is not supported./)
         end
       end
 

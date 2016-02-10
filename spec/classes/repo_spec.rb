@@ -7,7 +7,7 @@ describe 'consular::repo' do
         facts
       end
 
-      it { should compile }
+      it { is_expected.to compile }
     end
   end
 end

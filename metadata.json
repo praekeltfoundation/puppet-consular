@@ -1,6 +1,6 @@
 {
   "name": "praekeltfoundation-consular",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Jamie Hewland",
   "summary": "Basic module to manage Consular",
   "license": "BSD-3-Clause",
@@ -15,7 +15,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">=3.4.0 < 4.0.0"
+      "version_requirement": ">=3.4.0"
     }
   ],
   "operatingsystem_support": [

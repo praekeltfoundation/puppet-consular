@@ -89,4 +89,6 @@ class consular (
   service { 'consular':
     ensure => running,
   }
+
+  Package['python-consular'] ~> Service['consular']
 }

@@ -22,6 +22,7 @@ describe 'consular' do
           is_expected.to contain_package('python-consular')
             .with_ensure('installed')
             .that_requires('Class[consular::repo]')
+            .that_notifies('Service[consular]')
         end
 
         it do

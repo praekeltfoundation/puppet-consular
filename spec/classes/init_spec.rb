@@ -118,10 +118,7 @@ describe 'consular' do
             .with_ensure('absent')
         end
 
-        it do
-          is_expected.to contain_service('consular')
-            .with_ensure('stopped')
-        end
+        it { is_expected.not_to contain_service('consular') }
       end
     end
   end

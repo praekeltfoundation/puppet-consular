@@ -6,7 +6,8 @@
 #
 # [*ensure*]
 #   Global ensure value for Consular. Valid values are 'present' and 'absent'.
-#   When 'absent' is passed, the package, config and service will be removed.
+#   When 'absent' is passed, the package and config will be removed and the
+#   service will not be managed.
 #
 # [*package_ensure*]
 #   The ensure value for the Consular package. If *ensure* is 'absent' then this
@@ -85,11 +86,6 @@ class consular (
     'absent'  => 'purged',
   }
 
-  $_service_ensure = $ensure ? {
-    'present' => 'running',
-    'absent'  => 'stopped',
-  }
-
   class { 'consular::repo':
     manage => $repo_manage,
     ensure => $ensure,
@@ -104,10 +100,12 @@ class consular (
     ensure  => $ensure,
     content => template('consular/init.conf.erb'),
   }
-  ~>
-  service { 'consular':
-    ensure => $_service_ensure,
-  }
 
-  Package['python-consular'] ~> Service['consular']
+  if $ensure == 'present' {
+    service { 'consular':
+      ensure => running,
+    }
+    File['/etc/init/consular.conf'] ~> Service['consular']
+    Package['python-consular'] ~> Service['consular']
+  }
 }

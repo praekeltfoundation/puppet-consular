@@ -4,8 +4,13 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Global ensure value for Consular. Valid values are 'present' and 'absent'.
+#   When 'absent' is passed, the package, config and service will be removed.
+#
 # [*package_ensure*]
-#   The ensure value for the Consular package.
+#   The ensure value for the Consular package. If *ensure* is 'absent' then this
+#   parameter is ignored and the package is purged.
 #
 # [*repo_manage*]
 #   Whether or not to manage the repository for Consular.

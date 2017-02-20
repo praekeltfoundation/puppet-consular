@@ -99,6 +99,30 @@ describe 'consular' do
             .without_content(/--port 7000/)
         end
       end
+
+      describe 'when ensure is absent' do
+        let(:params) { { :ensure => 'absent' } }
+
+        it do
+          is_expected.to contain_class('consular::repo')
+            .with_ensure('absent')
+        end
+
+        it do
+          is_expected.to contain_package('python-consular')
+            .with_ensure('purged')
+        end
+
+        it do
+          is_expected.to contain_file('/etc/init/consular.conf')
+            .with_ensure('absent')
+        end
+
+        it do
+          is_expected.to contain_service('consular')
+            .with_ensure('stopped')
+        end
+      end
     end
   end
 end

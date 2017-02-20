@@ -4,8 +4,13 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Global ensure value for Consular. Valid values are 'present' and 'absent'.
+#   When 'absent' is passed, the package, config and service will be removed.
+#
 # [*package_ensure*]
-#   The ensure value for the Consular package.
+#   The ensure value for the Consular package. If *ensure* is 'absent' then this
+#   parameter is ignored and the package is purged.
 #
 # [*repo_manage*]
 #   Whether or not to manage the repository for Consular.
@@ -39,6 +44,7 @@
 #   override any of the above options.
 #   e.g. { 'timeout' => 10 }
 class consular (
+  $ensure          = 'present',
   $package_ensure  = 'installed',
   $repo_manage     = true,
   $repo_source     = 'ppa-jerith',
@@ -51,6 +57,7 @@ class consular (
   $purge           = false,
   $extra_opts      = {},
 ) {
+  validate_re($ensure, '^(present|absent)$')
   validate_bool($repo_manage)
   validate_ip_address($host)
   validate_integer($port)
@@ -73,21 +80,33 @@ class consular (
   }
   $final_opts = merge($base_opts, $extra_opts)
 
+  $_package_ensure = $ensure ? {
+    'present' => $package_ensure,
+    'absent'  => 'purged',
+  }
+
+  $_service_ensure = $ensure ? {
+    'present' => 'running',
+    'absent'  => 'stopped',
+  }
+
   class { 'consular::repo':
     manage => $repo_manage,
+    ensure => $ensure,
     source => $repo_source,
   }
   ->
   package { 'python-consular':
-    ensure  => $package_ensure,
+    ensure  => $_package_ensure,
   }
   ->
   file { '/etc/init/consular.conf':
+    ensure  => $ensure,
     content => template('consular/init.conf.erb'),
   }
   ~>
   service { 'consular':
-    ensure => running,
+    ensure => $_service_ensure,
   }
 
   Package['python-consular'] ~> Service['consular']

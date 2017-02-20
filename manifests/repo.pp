@@ -2,6 +2,7 @@
 #
 class consular::repo (
   $manage = true,
+  $ensure = 'present',
   $source = 'ppa-jerith',
 ) {
   if $manage {
@@ -13,7 +14,7 @@ class consular::repo (
         # individual in his personal capacity. It needs to be replaced with a
         # better one that gets automated package updates and such.
         apt::ppa { 'ppa:jerith/consular':
-          ensure => 'present'
+          ensure => $ensure
         }
 
         # Ensure apt-get update runs as part of this class

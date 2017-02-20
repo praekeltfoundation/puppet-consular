@@ -1,6 +1,8 @@
 # puppet-consular
 Puppet module for managing [Consular](http://consular.readthedocs.org).
 
+> **DEPRECATED:** Consular has been deprecated and it, as well as this Puppet module, will no longer be maintained.
+
 This is a very simple module and does not include a lot of features. It is only compatible with certain versions of Ubuntu (those that use Upstart as their init system) and has only been tested on Ubuntu 14.04.
 
 **NOTE:** We currently provide Consular packages from a PPA. This is a temporary PPA that is managed manually by a single individual in his personal capacity. It needs to be replaced with a better one that gets automated package updates and such.
